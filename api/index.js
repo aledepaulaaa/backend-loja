@@ -90,13 +90,6 @@ app.post("/api/vivawalletpayment", async (req, res) => {
       disableCash: data.disableCash,
       disableWallet: data.disableWallet,
       sourceCode: data.sourceCode,
-      merchantTrns: data.merchantTrns,
-      tags: data.tags,
-      cardTokens: data.cardTokens,
-      options: {
-        successUrl: "http://localhost:3000/sucess",
-        failureUrl: "http://localhost:3000/error",
-      },
     }
 
     const response = await axios.post(
@@ -120,16 +113,49 @@ app.post("/api/vivawalletpayment", async (req, res) => {
       }
     )
 
-    res.status(200).json({
-      orderCode: orderResponse.data.orderCode,
-      message: "Ordem de pagamento criada com sucesso.",
-    })
+    if(orderResponse.status === 200) {
+      console.log("Ordem criada no backend: ", orderResponse.data)
+      res.status(200).json({
+        orderCode: orderResponse.data.orderCode,
+        message: "Ordem de pagamento criada com sucesso.",
+      })
+    } else {
+      res.status(400).json({
+        error: orderResponse.response?.data || "Erro ao processar o pagamento.",
+      })
+    }
+
+    // const vivaMerchantID = "671c2305-4704-4a7d-8491-1697ff78c72b"
+    // const vivaApiKey = "3x01ep"
+
+    // const response = await axios.post(
+    //   "https://demo.vivapayments.com/api/orders",
+    //   orderPayload,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Authorization": `Basic ${Buffer.from(`${vivaMerchantID}:${vivaApiKey}`).toString("base64")}`,
+    //     },
+    //   })
+
+    // console.log("Resposta: ", response)
+    // if (response.status === 200) {
+    //   res.status(200).json({ orderCode: response.data, message: "Ordem de pagamento criada com sucesso." })
+    // } else {
+    //   res.status(400).json({
+    //     error: error.response?.data || "Erro ao processar o pagamento.",
+    //   })
+    // }
   } catch (error) {
     console.log("Erro ao fazer pagamento: ", error)
-    res.status(400).json({
-      error: error.response?.data || "Erro ao processar o pagamento.",
-    })
   }
+})
+
+// Webhook Viva Wallet
+app.post("/api/vivawallet/webhook", async (req, res) => {
+  const data = req.body
+  console.log("Dados Webhook: ", data)
+  res.status(200).json({ message: "Webhook recebido com sucesso." })
 })
 
 // Use express's default error handling middleware
