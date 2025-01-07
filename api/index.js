@@ -151,37 +151,35 @@ app.post("/api/vivawalletpayment", async (req, res) => {
   }
 })
 
-// Webhook Viva Wallet
+const verificationToken = process.env.VERIFICATION_TOKEN
 
 // Rota para verificação do webhook
-app.get("/api/vivawallet/webhook", (req, res) => {
+app.post("/api/vivawallet/webhook", (req, res) => {
   console.log("Recebendo verificação do webhook...", req.params)
-  const verificationToken = "9F593B43A5B7EFC2828A963783354D1D6115592F"; // Substitua pelo token fornecido pela Viva Wallet
-  res.json({ Key: verificationToken });
-});
+  res.json({ Key: verificationToken })
+})
 
 // Rota para receber notificações de eventos
 app.post("/api/vivawallet/webhook", (req, res) => {
-  const data = req.body;
+  const data = req.body
 
-  switch (data.event) {
-    case 1796:
-      console.log("O pagamento do cliente foi efetuado com sucesso: ", data);
-      break;
-    case 1797:
-      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data);
-      break;
-    case 1798:
-      console.log("O pagamento de um cliente falhou: ", data);
-      break;
+  switch (data.EventType) {
+    case 1796: // Transaction Payment Created
+      console.log("O pagamento do cliente foi efetuado com sucesso: ", data.EventType)
+      break
+    case 1797: // Transaction Reversal Created
+      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data.EventType)
+      break
+    case 1798: // Transaction Payment Failed
+      console.log("O pagamento de um cliente falhou: ", data.EventType)
+      break
     default:
-      console.log("Evento desconhecido: ", data);
-      break;
+      console.log("Evento desconhecido: ", data.EventType)
+      break
   }
 
-  console.log("Dados Webhook: ", data);
-  res.status(200).json({ message: "Webhook recebido com sucesso." });
-});
+  res.status(200).json({ message: "Webhook recebido com sucesso." })
+})
 
 
 // Use express's default error handling middleware
