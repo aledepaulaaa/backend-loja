@@ -165,6 +165,7 @@ app.post("/api/vivawallet/webhook", async (req, res) => {
       console.log("O pagamento de um cliente falhou: ", data)
       break;
     default:
+      console.log("Evento desconhecido: ", data)
       break;
   }
   console.log("Dados Webhook: ", data)
