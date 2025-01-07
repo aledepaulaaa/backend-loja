@@ -155,6 +155,7 @@ app.post("/api/vivawalletpayment", async (req, res) => {
 
 // Rota para verificação do webhook
 app.get("/api/vivawallet/webhook", (req, res) => {
+  console.log("Recebendo verificação do webhook...", req.params)
   const verificationToken = "9F593B43A5B7EFC2828A963783354D1D6115592F"; // Substitua pelo token fornecido pela Viva Wallet
   res.json({ Key: verificationToken });
 });
