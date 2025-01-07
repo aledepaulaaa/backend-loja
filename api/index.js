@@ -154,6 +154,19 @@ app.post("/api/vivawalletpayment", async (req, res) => {
 // Webhook Viva Wallet
 app.post("/api/vivawallet/webhook", async (req, res) => {
   const data = req.body
+  switch (data.event) {
+    case 1796:
+      console.log("O pagamento do cliente foi efetuado com sucesso: ", data)
+      break;
+    case 1797:
+      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data)
+      break;
+    case 1798:
+      console.log("O pagamento de um cliente falhou: ", data)
+      break;
+    default:
+      break;
+  }
   console.log("Dados Webhook: ", data)
   res.status(200).json({ message: "Webhook recebido com sucesso." })
 })
