@@ -141,19 +141,18 @@ app.post("/api/vivawallet/webhook", (req, res) => {
 // Rota para receber notificações de eventos
 app.post("/api/vivawallet/webhook", (req, res) => {
   const data = req.body
-  console.log("Webhook recebido: ", data)
-  switch (data.EventData) {
-    case 1796: // Transaction Payment Created
-      console.log("O pagamento do cliente foi efetuado com sucesso: ", data.EventData)
+  switch (data) {
+    case data.EventTypeId === 1796: // Transaction Payment Created
+      console.log("O pagamento do cliente foi efetuado com sucesso: ", data.EventTypeId)
       break
-    case 1797: // Transaction Reversal Created
-      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data.EventData)
+    case data.EventTypeId === 1797: // Transaction Reversal Created
+      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data.EventTypeId)
       break
-    case 1798: // Transaction Payment Failed
-      console.log("O pagamento de um cliente falhou: ", data.EventData)
+    case data.EventTypeId === 1798: // Transaction Payment Failed
+      console.log("O pagamento de um cliente falhou: ", data.EventTypeId)
       break
     default:
-      console.log("Evento desconhecido: ", data.EventData)
+      console.log("Evento desconhecido: ", data.EventTypeId)
       break
   }
 
