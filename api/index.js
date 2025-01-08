@@ -125,28 +125,6 @@ app.post("/api/vivawalletpayment", async (req, res) => {
         error: orderResponse.response?.data || "Erro ao processar o pagamento.",
       })
     }
-
-    // const vivaMerchantID = "671c2305-4704-4a7d-8491-1697ff78c72b"
-    // const vivaApiKey = "3x01ep"
-
-    // const response = await axios.post(
-    //   "https://demo.vivapayments.com/api/orders",
-    //   orderPayload,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Authorization": `Basic ${Buffer.from(`${vivaMerchantID}:${vivaApiKey}`).toString("base64")}`,
-    //     },
-    //   })
-
-    // console.log("Resposta: ", response)
-    // if (response.status === 200) {
-    //   res.status(200).json({ orderCode: response.data, message: "Ordem de pagamento criada com sucesso." })
-    // } else {
-    //   res.status(400).json({
-    //     error: error.response?.data || "Erro ao processar o pagamento.",
-    //   })
-    // }
   } catch (error) {
     console.log("Erro ao fazer pagamento: ", error)
   }
