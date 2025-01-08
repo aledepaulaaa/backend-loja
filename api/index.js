@@ -22,6 +22,7 @@ const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const notificationRoutes = require("../routes/notificationRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
+const { mongo } = require("mongoose");
 // const {
 //   getGlobalSetting,
 //   getStoreCustomizationSetting,
@@ -162,19 +163,19 @@ app.post("/api/vivawallet/webhook", (req, res) => {
 // Rota para receber notificações de eventos
 app.post("/api/vivawallet/webhook", (req, res) => {
   const data = req.body
-
-  switch (data.EventType) {
+  console.log("Webhook recebido: ", data)
+  switch (data.EventData) {
     case 1796: // Transaction Payment Created
-      console.log("O pagamento do cliente foi efetuado com sucesso: ", data.EventType)
+      console.log("O pagamento do cliente foi efetuado com sucesso: ", data.EventData)
       break
     case 1797: // Transaction Reversal Created
-      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data.EventType)
+      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data.EventData)
       break
     case 1798: // Transaction Payment Failed
-      console.log("O pagamento de um cliente falhou: ", data.EventType)
+      console.log("O pagamento de um cliente falhou: ", data.EventData)
       break
     default:
-      console.log("Evento desconhecido: ", data.EventType)
+      console.log("Evento desconhecido: ", data.EventData)
       break
   }
 
