@@ -38,47 +38,42 @@ const verifyEmailAddress = async (req, res) => {
   }
 };
 
+
 const registerCustomer = async (req, res) => {
-  const token = req.params.token;
-  const { name, email, password } = jwt.decode(token);
-  const isAdded = await Customer.findOne({ email: email });
+  try {
+    const { name, email, password } = req.body;
+    console.log("Recebendo dados: ", { name, email, password });
 
-  if (isAdded) {
-    const token = signInToken(isAdded);
-    return res.send({
+    // Verificar se o email já está registrado
+    const isAdded = await Customer.findOne({ email });
+
+    if (isAdded) {
+      const token = signInToken(isAdded);
+      return res.send({
+        token,
+        _id: isAdded._id,
+        name: isAdded.name,
+        email: isAdded.email,
+        message: "Email já registrado!",
+      });
+    }
+
+    const newUser = new Customer({ name, email, password: bcrypt.hashSync(password, 8), }); // Hashear a senha
+    await newUser.save();
+
+    const token = signInToken(newUser);
+    return res.status(201).send({
       token,
-      _id: isAdded._id,
-      name: isAdded.name,
-      email: isAdded.email,
-      message: "Email Already Verified!",
+      _id: newUser._id,
+      name: newUser.name,
+      email: newUser.email,
+      message: "Cadastro realizado com sucesso!",
     });
+  } catch (err) {
+    console.error("Erro ao registrar cliente: ", err);
+    res.status(500).send({ message: "Erro ao registrar cliente" })
   }
-
-  if (token) {
-    jwt.verify(token, process.env.JWT_SECRET_FOR_VERIFY, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          message: "Token Expired, Please try again!",
-        });
-      } else {
-        const newUser = new Customer({
-          name,
-          email,
-          password: bcrypt.hashSync(password),
-        });
-        newUser.save();
-        const token = signInToken(newUser);
-        res.send({
-          token,
-          _id: newUser._id,
-          name: newUser.name,
-          email: newUser.email,
-          message: "Email Verified, Please Login Now!",
-        });
-      }
-    });
-  }
-};
+}
 
 const addAllCustomers = async (req, res) => {
   try {
@@ -96,17 +91,16 @@ const addAllCustomers = async (req, res) => {
 
 const loginCustomer = async (req, res) => {
   try {
-    const customer = await Customer.findOne({ email: req.body.email });
-
-    // console.log("loginCustomer", req.body.password, "customer", customer);
+    const { email, password } = req.body
+    const customer = await Customer.findOne({ email });
 
     if (
       customer &&
       customer.password &&
-      bcrypt.compareSync(req.body.password, customer.password)
+      bcrypt.compareSync(password, customer.password)
     ) {
       const token = signInToken(customer);
-      res.send({
+      res.status(201).send({
         token,
         _id: customer._id,
         name: customer.name,
@@ -210,7 +204,7 @@ const signUpWithProvider = async (req, res) => {
     // const { user } = jwt.decode(req.body.params);
     const user = jwt.decode(req.params.token);
 
-    // console.log("user", user);
+    console.log("user", user);
     const isAdded = await Customer.findOne({ email: user.email });
     if (isAdded) {
       const token = signInToken(isAdded);

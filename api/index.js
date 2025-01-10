@@ -2,9 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
-const qs = require("qs");
 const path = require("path");
-const axios = require("axios");
 // const http = require("http");
 // const { Server } = require("socket.io");
 
@@ -21,8 +19,8 @@ const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const notificationRoutes = require("../routes/notificationRoutes");
+const pagamentoRoutes = require("../routes/pagamentoRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
-const { mongo } = require("mongoose");
 // const {
 //   getGlobalSetting,
 //   getStoreCustomizationSetting,
@@ -47,6 +45,7 @@ app.get("/", (req, res) => {
 });
 
 //this for route will need for store front, also for admin dashboard
+app.use("/api/vivawallet", pagamentoRoutes);
 app.use("/api/products/", productRoutes);
 app.use("/api/category/", categoryRoutes);
 app.use("/api/coupon/", couponRoutes);
@@ -61,104 +60,6 @@ app.use("/api/notification/", isAuth, notificationRoutes);
 //if you not use admin dashboard then these two route will not needed.
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
-
-// Endpoint para conexão e ordem de pagamento com viva wallet
-app.post("/api/vivawalletpayment", async (req, res) => {
-  const data = req.body
-  console.log("Dados Pagamento: ", data)
-  try {
-    const clientID = process.env.VIVA_CLIENT_ID
-    const clientSecret = process.env.VIVA_CLIENT_SECRET
-
-    const orderPayload = {
-      accessToken: data.accessToken,
-      amount: data.amount,
-      customerTrns: data.customerTrns,
-      customer: {
-        fullName: data.fullName,
-        email: data.email,
-        phone: data.phone,
-        countryCode: data.countryCode,
-        requestLang: data.requestLang,
-      },
-      paymentTimeout: data.paymentTimeout,
-      preauth: data.preauth,
-      allowRecurring: data.allowRecurring,
-      maxInstallments: data.maxInstallments,
-      paymentNotification: data.paymentNotification,
-      tipAmount: data.tipAmount,
-      disableExactAmount: data.disableExactAmount,
-      disableCash: data.disableCash,
-      disableWallet: data.disableWallet,
-      sourceCode: data.sourceCode,
-    }
-
-    const response = await axios.post(
-      "https://demo-accounts.vivapayments.com/connect/token",
-      qs.stringify({ grant_type: "client_credentials" }), {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Authorization": `Basic ${Buffer.from(`${clientID}:${clientSecret}`).toString("base64")}`,
-      },
-    })
-
-    const accessToken = response.data.access_token
-    const orderResponse = await axios.post(
-      "https://demo-api.vivapayments.com/checkout/v2/orders",
-      orderPayload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`,
-        },
-      }
-    )
-
-    if (orderResponse.status === 200) {
-      console.log("Ordem criada no backend: ", orderResponse.data)
-      res.status(200).json({
-        orderCode: orderResponse.data.orderCode,
-        message: "Ordem de pagamento criada com sucesso.",
-      })
-    } else {
-      res.status(400).json({
-        error: orderResponse.response?.data || "Erro ao processar o pagamento.",
-      })
-    }
-  } catch (error) {
-    console.log("Erro ao fazer pagamento: ", error)
-  }
-})
-
-const verificationToken = process.env.VERIFICATION_TOKEN
-
-// Rota para verificação do webhook
-app.post("/api/vivawallet/webhook", (req, res) => {
-  console.log("Recebendo verificação do webhook...", req.params)
-  res.json({ Key: verificationToken })
-})
-
-// Rota para receber notificações de eventos
-app.post("/api/vivawallet/webhook", (req, res) => {
-  const data = req.body
-  switch (data.EventTypeId) {
-    case 1796: // Transaction Payment Created
-      console.log("O pagamento do cliente foi efetuado com sucesso: ", data)
-      break
-    case 1797: // Transaction Reversal Created
-      console.log("Um reembolso do cliente foi efetuado com sucesso: ", data)
-      break
-    case 1798: // Transaction Payment Failed
-      console.log("O pagamento de um cliente falhou: ", data)
-      break
-    default:
-      console.log("Evento desconhecido: ", data)
-      break
-  }
-
-  res.status(200).json({ message: "Webhook recebido com sucesso." })
-})
-
 
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
