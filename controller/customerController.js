@@ -91,6 +91,7 @@ const addAllCustomers = async (req, res) => {
 
 const loginCustomer = async (req, res) => {
   try {
+    console.log("Email", req.body.email, "Senha:", req.body.password);
     const customer = await Customer.findOne({ email: req.body.email });
 
     if (
@@ -99,7 +100,7 @@ const loginCustomer = async (req, res) => {
       bcrypt.compareSync(req.body.password, customer.password)
     ) {
       const token = signInToken(customer);
-      res.send({
+      res.status(200).send({
         token,
         _id: customer._id,
         name: customer.name,
@@ -119,38 +120,6 @@ const loginCustomer = async (req, res) => {
     });
   }
 };
-
-// const loginCustomer = async (req, res) => {
-//   try {
-//     const { email, password } = req.body
-//     const customer = await Customer.findOne({ email });
-
-//     if (
-//       customer &&
-//       customer.password &&
-//       bcrypt.compareSync(password, customer.password)
-//     ) {
-//       const token = signInToken(customer);
-//       res.status(201).send({
-//         token,
-//         _id: customer._id,
-//         name: customer.name,
-//         email: customer.email,
-//         address: customer.address,
-//         phone: customer.phone,
-//         image: customer.image,
-//       });
-//     } else {
-//       res.status(401).send({
-//         message: "Senha ou email inválidos!",
-//       });
-//     }
-//   } catch (err) {
-//     res.status(500).send({
-//       message: err.message,
-//     });
-//   }
-// };
 
 const forgetPassword = async (req, res) => {
   const isAdded = await Customer.findOne({ email: req.body.verifyEmail });
