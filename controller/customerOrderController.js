@@ -1,8 +1,5 @@
 require("dotenv").config();
 const stripe = require("stripe");
-const Razorpay = require("razorpay");
-// const stripe = require("stripe")(`${process.env.STRIPE_KEY}` || null); /// use hardcoded key if env not work
-
 const mongoose = require("mongoose");
 
 const Order = require("../models/Order");
@@ -81,50 +78,6 @@ const createPaymentIntent = async (req, res) => {
     const errorMessage =
       err instanceof Error ? err.message : "Internal server error";
     res.status(500).send({ message: errorMessage });
-  }
-};
-
-const createOrderByRazorPay = async (req, res) => {
-  try {
-    const storeSetting = await Setting.findOne({ name: "storeSetting" });
-    // console.log("createOrderByRazorPay", storeSetting?.setting);
-
-    const instance = new Razorpay({
-      key_id: storeSetting?.setting?.razorpay_id,
-      key_secret: storeSetting?.setting?.razorpay_secret,
-    });
-
-    const options = {
-      amount: req.body.amount * 100,
-      currency: "INR",
-    };
-    const order = await instance.orders.create(options);
-
-    if (!order)
-      return res.status(500).send({
-        message: "Error occurred when creating order!",
-      });
-    res.send(order);
-  } catch (err) {
-    res.status(500).send({
-      message: err.message,
-    });
-  }
-};
-
-const addRazorpayOrder = async (req, res) => {
-  try {
-    const newOrder = new Order({
-      ...req.body,
-      user: req.user._id,
-    });
-    const order = await newOrder.save();
-    res.status(201).send(order);
-    handleProductQuantity(order.cart);
-  } catch (err) {
-    res.status(500).send({
-      message: err.message,
-    });
   }
 };
 
@@ -238,6 +191,4 @@ module.exports = {
   getOrderById,
   getOrderCustomer,
   createPaymentIntent,
-  createOrderByRazorPay,
-  addRazorpayOrder,
 };
