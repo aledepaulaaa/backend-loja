@@ -93,8 +93,6 @@ const loginCustomer = async (req, res) => {
   try {
     const customer = await Customer.findOne({ email: req.body.email });
 
-    console.log("loginCustomer", req.body.password, "customer", customer);
-
     if (
       customer &&
       customer.password &&
@@ -117,7 +115,7 @@ const loginCustomer = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send({
-      message: err.message,
+      message: "Erro interno no servidor." + err.message,
     });
   }
 };
