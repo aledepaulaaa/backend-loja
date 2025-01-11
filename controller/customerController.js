@@ -91,16 +91,17 @@ const addAllCustomers = async (req, res) => {
 
 const loginCustomer = async (req, res) => {
   try {
-    const { email, password } = req.body
-    const customer = await Customer.findOne({ email });
+    const customer = await Customer.findOne({ email: req.body.email });
+
+    console.log("loginCustomer", req.body.password, "customer", customer);
 
     if (
       customer &&
       customer.password &&
-      bcrypt.compareSync(password, customer.password)
+      bcrypt.compareSync(req.body.password, customer.password)
     ) {
       const token = signInToken(customer);
-      res.status(201).send({
+      res.send({
         token,
         _id: customer._id,
         name: customer.name,
@@ -111,7 +112,7 @@ const loginCustomer = async (req, res) => {
       });
     } else {
       res.status(401).send({
-        message: "Senha ou email inválidos!",
+        message: "Invalid user or password!",
       });
     }
   } catch (err) {
@@ -120,6 +121,38 @@ const loginCustomer = async (req, res) => {
     });
   }
 };
+
+// const loginCustomer = async (req, res) => {
+//   try {
+//     const { email, password } = req.body
+//     const customer = await Customer.findOne({ email });
+
+//     if (
+//       customer &&
+//       customer.password &&
+//       bcrypt.compareSync(password, customer.password)
+//     ) {
+//       const token = signInToken(customer);
+//       res.status(201).send({
+//         token,
+//         _id: customer._id,
+//         name: customer.name,
+//         email: customer.email,
+//         address: customer.address,
+//         phone: customer.phone,
+//         image: customer.image,
+//       });
+//     } else {
+//       res.status(401).send({
+//         message: "Senha ou email inválidos!",
+//       });
+//     }
+//   } catch (err) {
+//     res.status(500).send({
+//       message: err.message,
+//     });
+//   }
+// };
 
 const forgetPassword = async (req, res) => {
   const isAdded = await Customer.findOne({ email: req.body.verifyEmail });
