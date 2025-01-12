@@ -5,10 +5,10 @@ const { webhookEvents, webhookConnection } = require("../controller/webhookContr
 const { createPaymentOrder } = require("../controller/pagamentoController");
 
 // Rota para verificação do webhook
-router.post("/", webhookConnection)
+router.post("/connection", webhookConnection)
 
 // Rota para receber notificações de eventos
-router.post("/", webhookEvents)
+router.post("/events", webhookEvents)
 
 // Endpoint para conexão e ordem de pagamento com viva wallet
 router.post("/payment",  createPaymentOrder)
