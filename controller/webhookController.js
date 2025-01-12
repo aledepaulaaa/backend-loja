@@ -3,7 +3,7 @@ const verificationToken = process.env.VERIFICATION_TOKEN;
 
 const webhookConnection = async (req, res) => {
     console.log("Recebendo verificação do webhook...", req.params);
-    res.json({ Key: verificationToken });
+    res.status(200).json({ Key: verificationToken });
 };
 
 const webhookEvents = async (req, res) => {
