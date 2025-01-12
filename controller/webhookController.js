@@ -7,11 +7,6 @@ const webhookConnection = async (req, res) => {
 };
 
 const webhookEvents = async (req, res) => {
-    const receivedToken = req.headers['verification-token']; // Verificar o token nos headers
-    if (receivedToken !== verificationToken) {
-        return res.status(401).json({ message: "Token de verificação inválido." });
-    }
-
     const data = req.body;
     switch (data.EventTypeId) {
         case 1796: // Transaction Payment Created
