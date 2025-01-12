@@ -1,3 +1,4 @@
+const Order = require("../models/Order");
 const Webhook = require("../models/Webhook");
 const verificationToken = process.env.VERIFICATION_TOKEN;
 
@@ -13,9 +14,14 @@ const webhookEvents = async (req, res) => {
             console.log("O pagamento do cliente foi efetuado com sucesso: ", data);
 
             const newWebhook = new Webhook(data);
+            // Salvar a compra realizada no banco na collection orders
+            const newOrder = new Order(data);
             try {
                 await newWebhook.save();
                 console.log("Evento de pagamento salvo com sucesso: ", newWebhook);
+                
+                await newOrder.save();
+                console.log("Compra salva com sucesso: ", newOrder);
             } catch (error) {
                 console.error("Erro ao salvar evento de pagamento: ", error);
             }
