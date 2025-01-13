@@ -134,14 +134,14 @@ const orderSchema = new mongoose.Schema(
             },
             orderLines: [
                 {
-                    name: { type: String, required: false }, // Mudado para String
+                    name: { type: String, required: false },
                     type: { type: String, required: false },
                     taxRate: { type: Number, required: false },
-                    quantity: { type: Number, required: false }, // Mudado para Number
-                    unitPrice: { type: Number, required: false }, // Mudado para Number
-                    imageUrl: { type: String, required: false },// Mudado para String
+                    quantity: { type: Number, required: false },
+                    unitPrice: { type: Number, required: false },
+                    imageUrl: { type: String, required: false },
                     reference: { type: String, required: false },
-                    totalAmount: { type: Number, required: false }, // Mudado para Number
+                    totalAmount: { type: Number, required: false },
                     productUrl: { type: String, required: false },
                     merchantData: { type: String, required: false },
                     quantityUnit: { type: String, required: false },
@@ -162,15 +162,15 @@ const orderSchema = new mongoose.Schema(
                     },
                 },
                 {
-                    name: { type: String, required: false }, // Mudado para String
-                    quantity: { type: Number, required: false }, // Mudado para Number
-                    unit_price: { type: Number, required: false }, // Mudado para Number
+                    name: { type: String, required: false },
+                    quantity: { type: Number, required: false },
+                    unit_price: { type: Number, required: false },
                     tax_rate: { type: Number, required: false },
-                    total_amount: { type: Number, required: false }, // Mudado para Number
+                    total_amount: { type: Number, required: false },
                     total_discount_amount: { type: Number, required: false },
                     total_tax_amount: { type: Number, required: false },
-                    product_url: { type: String, required: false }, // Mudado para String
-                    image_url: { type: String, required: false },// Mudado para String
+                    product_url: { type: String, required: false },
+                    image_url: { type: String, required: false },
                 }
             ],
         },
