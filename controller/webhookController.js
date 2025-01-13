@@ -12,10 +12,7 @@ const webhookEvents = async (req, res) => {
 
     let orderData = {
         "user": data.Email,
-        "paymentMethod": data.CardToken,
         "total": data.Amount,
-        "subTotal": data.Amount,
-        "shippingCost": 0,
     }
     
     switch (data.EventTypeId) {

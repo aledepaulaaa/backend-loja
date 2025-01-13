@@ -5,8 +5,8 @@ const orderSchema = new mongoose.Schema(
   {
     user: {
       type: String,
-      ref: "Customer",
-      required: false,
+      // ref: "Customer",
+      required: true,
     },
     invoice: {
       type: Number,
@@ -59,7 +59,7 @@ const orderSchema = new mongoose.Schema(
 
     total: {
       type: Number,
-      required: false,
+      required: true,
     },
     shippingOption: {
       type: String,
