@@ -16,6 +16,7 @@ const addProduct = async (req, res) => {
     await newProduct.save();
     res.send(newProduct);
   } catch (err) {
+    console.log("Erro ao salvar o produto: ", err);
     res.status(500).send({
       message: err.message,
     });

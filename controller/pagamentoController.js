@@ -1,6 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const qs = require("qs");
+const OrderCustomizado = require("../models/OrderCustomizado");
 
 const createPaymentOrder = async (req, res) => {
     const data = req.body
@@ -12,27 +13,40 @@ const createPaymentOrder = async (req, res) => {
         const demoCheckoutOrdersUrl = process.env.DEMO_CHECKOUT_ORDERS_URL
 
         const orderPayload = {
-            accessToken: data.accessToken,
+            accessToken: data.accessToken, // Assumindo que você ainda precisa do accessToken
             amount: data.amount,
             customerTrns: data.customerTrns,
             customer: {
-                fullName: data.fullName,
                 email: data.email,
+                fullName: data.fullName,
                 phone: data.phone,
                 countryCode: data.countryCode,
                 requestLang: data.requestLang,
             },
+            dynamicDescriptor: data.dynamicDescriptor,
+            currencyCode: data.currencyCode,
             paymentTimeout: data.paymentTimeout,
             preauth: data.preauth,
             allowRecurring: data.allowRecurring,
             maxInstallments: data.maxInstallments,
+            merchantTrns: data.merchantTrns,
             paymentNotification: data.paymentNotification,
             tipAmount: data.tipAmount,
             disableExactAmount: data.disableExactAmount,
             disableCash: data.disableCash,
             disableWallet: data.disableWallet,
             sourceCode: data.sourceCode,
-        }
+            tags: data.tags,
+            paymentMethodFees: data.paymentMethodFees,
+            cardTokens: data.cardTokens,
+            isCardVerification: data.isCardVerification,
+            nbgLoanOrderOptions: data.nbgLoanOrderOptions,
+            klarnaOrderOptions: data.klarnaOrderOptions,
+        };
+
+        // Salvar dados no banco de dados
+        const newOrder = new OrderCustomizado(orderPayload);
+        await newOrder.save();
 
         const response = await axios.post(demoTokenUrl,
             qs.stringify({ grant_type: "client_credentials" }), {
@@ -69,6 +83,22 @@ const createPaymentOrder = async (req, res) => {
     }
 }
 
+const getCustomAllOrders = async (req, res) => {
+    try {
+        const data = req.query
+        console.log("Solicitando dados de pagamento: ", data)
+
+        const orders = await OrderCustomizado.find()
+        res.status(200).json(orders)
+    } catch (error){
+        res.status(400).json({
+            message: "Erro ao obter dados de pagamento." + error
+        })
+        console.log("Erro ao obter dados de pagamento: ", error)
+    }
+}
+
 module.exports = {
-    createPaymentOrder
+    createPaymentOrder,
+    getCustomAllOrders
 }
