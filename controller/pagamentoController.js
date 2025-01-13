@@ -40,12 +40,6 @@ const createPaymentOrder = async (req, res) => {
                     country: data.country,
                     streetAddress: data.streetAddress
                 },
-                orderLines: [
-                    {
-                        name: data.name,
-                        totalAmount: data.totalAmount
-                    }
-                ],
             }
         }
 
