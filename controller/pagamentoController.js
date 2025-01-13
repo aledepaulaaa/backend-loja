@@ -32,15 +32,6 @@ const createPaymentOrder = async (req, res) => {
             disableCash: data.disableCash,
             disableWallet: data.disableWallet,
             sourceCode: data.sourceCode,
-            klarnaOrderOptions: {
-                shippingAddress: {
-                    city: data.city,
-                    email: data.email,
-                    phone: data.phone,
-                    country: data.country,
-                    streetAddress: data.streetAddress
-                },
-            }
         }
 
         const response = await axios.post(demoTokenUrl,
