@@ -9,7 +9,7 @@ const orderSchema = new mongoose.Schema(
         },
         customerTrns: {
             type: String,
-            required: false, // Pode ser opcional, dependendo do seu caso
+            required: false,
         },
         customer: {
             email: { type: String, required: false },
@@ -68,24 +68,24 @@ const orderSchema = new mongoose.Schema(
         },
         sourceCode: {
             type: String,
-            required: false
+            required: false,
         },
         tags: {
-            type: [String], // Array de strings para as tags
+            type: [String],
             required: false,
         },
         paymentMethodFees: {
             paymentMethodId: {
                 type: String,
-                required: false
+                required: false,
             },
             fee: {
                 type: Number,
-                required: false
+                required: false,
             },
         },
         cardTokens: {
-            type: [String], // Array de strings para os tokens
+            type: [String],
             required: false,
         },
         isCardVerification: {
@@ -100,9 +100,9 @@ const orderSchema = new mongoose.Schema(
             ReceiptType: {
                 type: Number,
                 required: false,
-            }
+            },
         },
-        klarnaOrderOptions: { // Objeto para as opções Klarna
+        klarnaOrderOptions: {
             attachment: {
                 body: { type: String, required: false },
                 contentType: { type: String, required: false },
@@ -132,76 +132,47 @@ const orderSchema = new mongoose.Schema(
                 streetAddress: { type: String, required: false },
                 streetAddress2: { type: String, required: false },
             },
-            orderLines: [{
-                name: { type: [String], required: false },
-                type: { type: String, required: false },
-                taxRate: { type: Number, required: false },
-                quantity: { type: [Number], required: false },
-                unitPrice: { type: [Number], required: false },
-                imageUrl: { type: [String], required: false },
-                reference: { type: String, required: false },
-                totalAmount: { type: [Number], required: false },
-                productUrl: { type: String, required: false },
-                merchantData: { type: String, required: false },
-                quantityUnit: { type: String, required: false },
-                totalTaxAmount: { type: Number, required: false },
-                totalDiscountAmount: { type: Number, required: false },
-                subscription: {
-                    name: { type: String, required: false },
-                    interval: { type: String, required: false },
-                    intervalCount: { type: Number, required: false },
+            orderLines: [
+                {
+                    name: { type: String, required: false }, // Mudado para String
+                    type: { type: String, required: false },
+                    taxRate: { type: Number, required: false },
+                    quantity: { type: Number, required: false }, // Mudado para Number
+                    unitPrice: { type: Number, required: false }, // Mudado para Number
+                    imageUrl: { type: String, required: false },// Mudado para String
+                    reference: { type: String, required: false },
+                    totalAmount: { type: Number, required: false }, // Mudado para Number
+                    productUrl: { type: String, required: false },
+                    merchantData: { type: String, required: false },
+                    quantityUnit: { type: String, required: false },
+                    totalTaxAmount: { type: Number, required: false },
+                    totalDiscountAmount: { type: Number, required: false },
+                    subscription: {
+                        name: { type: String, required: false },
+                        interval: { type: String, required: false },
+                        intervalCount: { type: Number, required: false },
+                    },
+                    productIdentifiers: {
+                        size: { type: String, required: false },
+                        brand: { type: String, required: false },
+                        color: { type: String, required: false },
+                        categoryPath: { type: String, required: false },
+                        globalTradeItemNumber: { type: String, required: false },
+                        manufacturerPartNumber: { type: String, required: false },
+                    },
                 },
-                productIdentifiers: {
-                    size: { type: String, required: false },
-                    brand: { type: String, required: false },
-                    color: { type: String, required: false },
-                    categoryPath: { type: String, required: false },
-                    globalTradeItemNumber: { type: String, required: false },
-                    manufacturerPartNumber: { type: String, required: false },
-                },
-            },
-            {
-                name: { type: [String], required: false },
-                quantity: { type: [Number], required: false },
-                unit_price: { type: [Number], required: false },
-                tax_rate: { type: Number, required: false },
-                total_amount: { type: [Number], required: false },
-                total_discount_amount: { type: Number, required: false },
-                total_tax_amount: { type: Number, required: false },
-                product_url: { type: [String], required: false },
-                image_url: { type: [String], required: false },
-            }
-            ]
-        },
-        subTotal: {
-            type: Number,
-            required: true,
-        },
-        shippingCost: {
-            type: Number,
-            required: true,
-        },
-        discount: {
-            type: Number,
-            required: true,
-            default: 0,
-        },
-
-        total: {
-            type: Number,
-            required: true,
-        },
-        shippingOption: {
-            type: String,
-            required: false,
-        },
-        paymentMethod: {
-            type: String,
-            required: true,
-        },
-        cardInfo: {
-            type: Object,
-            required: false,
+                {
+                    name: { type: String, required: false }, // Mudado para String
+                    quantity: { type: Number, required: false }, // Mudado para Number
+                    unit_price: { type: Number, required: false }, // Mudado para Number
+                    tax_rate: { type: Number, required: false },
+                    total_amount: { type: Number, required: false }, // Mudado para Number
+                    total_discount_amount: { type: Number, required: false },
+                    total_tax_amount: { type: Number, required: false },
+                    product_url: { type: String, required: false }, // Mudado para String
+                    image_url: { type: String, required: false },// Mudado para String
+                }
+            ],
         },
         status: {
             type: String,
