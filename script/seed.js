@@ -58,8 +58,8 @@ const importData = async () => {
     await Coupon.deleteMany();
     await Coupon.insertMany(couponData);
 
-    // await Order.deleteMany();
-    // await Order.insertMany(orderData);
+    await Order.deleteMany();
+    await Order.insertMany(orderData);
 
     await Setting.deleteMany();
     await Setting.insertMany(settingData);
