@@ -4,9 +4,9 @@ const AutoIncrement = require("mongoose-sequence")(mongoose);
 const orderSchema = new mongoose.Schema(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Customer",
-      required: true,
+      required: false,
     },
     invoice: {
       type: Number,
@@ -45,21 +45,21 @@ const orderSchema = new mongoose.Schema(
     },
     subTotal: {
       type: Number,
-      required: true,
+      required: false,
     },
     shippingCost: {
       type: Number,
-      required: true,
+      required: false,
     },
     discount: {
       type: Number,
-      required: true,
+      required: false,
       default: 0,
     },
 
     total: {
       type: Number,
-      required: true,
+      required: false,
     },
     shippingOption: {
       type: String,
@@ -67,7 +67,7 @@ const orderSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      required: true,
+      required: false,
     },
     cardInfo: {
       type: Object,
@@ -79,7 +79,7 @@ const orderSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
   }
 );
 
