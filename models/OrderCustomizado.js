@@ -12,10 +12,10 @@ const orderSchema = new mongoose.Schema(
             required: false,
         },
         customer: {
-            email: { type: String, required: true },
-            fullName: { type: String, required: true },
-            phone: { type: String, required: true },
-            requestLang: { type: String, required: false },
+            email: { type: String },
+            fullName: { type: String },
+            phone: { type: String },
+            requestLang: { type: String },
         },
         dynamicDescriptor: {
             type: String,
