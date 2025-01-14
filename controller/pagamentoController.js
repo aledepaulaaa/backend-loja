@@ -24,7 +24,6 @@ const createPaymentOrder = async (req, res) => {
                 requestLang: data.requestLang,
             },
             dynamicDescriptor: data.dynamicDescriptor,
-            currencyCode: data.currencyCode,
             paymentTimeout: data.paymentTimeout,
             preauth: data.preauth,
             allowRecurring: data.allowRecurring,
