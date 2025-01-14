@@ -23,7 +23,7 @@ const webhookEvents = async (req, res) => {
                 if (customerEmail) {
                     // Encontre a ordem usando o email do cliente e atualize o status
                     const updatedOrder = await OrderCustomizado.findOneAndUpdate(
-                        { "customer.email": customerEmail },
+                        { "email": customerEmail },
                         { status: "Pago" },
                         { new: true } // Retorna o documento atualizado
                     );

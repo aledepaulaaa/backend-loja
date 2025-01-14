@@ -11,11 +11,21 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        customer: {
-            email: { type: String },
-            fullName: { type: String },
-            phone: { type: String },
-            requestLang: { type: String },
+        email: {
+            type: String,
+            required: false
+        },
+        fullName: {
+            type: String,
+            required: false
+        },
+        phone: {
+            type: String,
+            required: false
+        },
+        requestLang: {
+            type: String,
+            required: false
         },
         dynamicDescriptor: {
             type: String,
