@@ -13,19 +13,19 @@ const orderSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            required: false
+            required: false,
         },
         fullName: {
             type: String,
-            required: false
+            required: false,
         },
         phone: {
             type: String,
-            required: false
+            required: false,
         },
         requestLang: {
             type: String,
-            required: false
+            required: false,
         },
         dynamicDescriptor: {
             type: String,

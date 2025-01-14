@@ -5,7 +5,6 @@ const OrderCustomizado = require("../models/OrderCustomizado");
 
 const createPaymentOrder = async (req, res) => {
     const data = req.body
-    console.log("Dados de Pagamento: ", data)
     try {
         const clientID = process.env.VIVA_CLIENT_ID
         const clientSecret = process.env.VIVA_CLIENT_SECRET
@@ -13,7 +12,7 @@ const createPaymentOrder = async (req, res) => {
         const demoCheckoutOrdersUrl = process.env.DEMO_CHECKOUT_ORDERS_URL
 
         const orderPayload = {
-            accessToken: data.accessToken, // Assumindo que você ainda precisa do accessToken
+            accessToken: data.accessToken,
             amount: data.amount,
             customerTrns: data.customerTrns,
             customer: {
@@ -36,8 +35,31 @@ const createPaymentOrder = async (req, res) => {
             sourceCode: data.sourceCode,
         };
 
+        const orderToSave = {
+            amount: data.amount,
+            customerTrns: data.customerTrns,
+            email: orderPayload.customer.email,
+            fullName: orderPayload.customer.fullName,
+            phone: orderPayload.customer.phone,
+            requestLang: orderPayload.customer.requestLang,
+            dynamicDescriptor: data.dynamicDescriptor,
+            paymentTimeout: data.paymentTimeout,
+            preauth: data.preauth,
+            allowRecurring: data.allowRecurring,
+            maxInstallments: data.maxInstallments,
+            merchantTrns: data.merchantTrns,
+            paymentNotification: data.paymentNotification,
+            tipAmount: data.tipAmount,
+            disableExactAmount: data.disableExactAmount,
+            disableCash: data.disableCash,
+            disableWallet: data.disableWallet,
+            sourceCode: data.sourceCode,
+        }
+
+        console.log("Dados de Pagamento Ajustados: ", orderToSave)
+
         // Salvar dados no banco de dados
-        const newOrder = new OrderCustomizado(orderPayload);
+        const newOrder = new OrderCustomizado(orderToSave);
         await newOrder.save();
 
         const response = await axios.post(demoTokenUrl,
