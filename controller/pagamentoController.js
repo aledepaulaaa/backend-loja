@@ -20,7 +20,6 @@ const createPaymentOrder = async (req, res) => {
                 email: data.email,
                 fullName: data.fullName,
                 phone: data.phone,
-                countryCode: data.countryCode,
                 requestLang: data.requestLang,
             },
             dynamicDescriptor: data.dynamicDescriptor,

@@ -15,16 +15,11 @@ const orderSchema = new mongoose.Schema(
             email: { type: String, required: false },
             fullName: { type: String, required: false },
             phone: { type: String, required: false },
-            countryCode: { type: Number, required: false },
             requestLang: { type: String, required: false },
         },
         dynamicDescriptor: {
             type: String,
             required: false,
-        },
-        currencyCode: {
-            type: Number,
-            required: true,
         },
         paymentTimeout: {
             type: Number,
@@ -70,38 +65,6 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        tags: {
-            type: [String],
-            required: false,
-        },
-        paymentMethodFees: {
-            paymentMethodId: {
-                type: String,
-                required: false,
-            },
-            fee: {
-                type: Number,
-                required: false,
-            },
-        },
-        cardTokens: {
-            type: [String],
-            required: false,
-        },
-        isCardVerification: {
-            type: Boolean,
-            required: false,
-        },
-        nbgLoanOrderOptions: {
-            Code: {
-                type: String,
-                required: false,
-            },
-            ReceiptType: {
-                type: Number,
-                required: false,
-            },
-        },
         klarnaOrderOptions: {
             attachment: {
                 body: { type: String, required: false },
@@ -120,59 +83,6 @@ const orderSchema = new mongoose.Schema(
                 streetAddress: { type: String, required: false },
                 streetAddress2: { type: String, required: false },
             },
-            shippingAddress: {
-                city: { type: String, required: false },
-                email: { type: String, required: false },
-                region: { type: String, required: false },
-                phone: { type: String, required: false },
-                country: { type: String, required: false },
-                givenName: { type: String, required: false },
-                familyName: { type: String, required: false },
-                postalCode: { type: String, required: false },
-                streetAddress: { type: String, required: false },
-                streetAddress2: { type: String, required: false },
-            },
-            orderLines: [
-                {
-                    name: { type: String, required: false },
-                    type: { type: String, required: false },
-                    taxRate: { type: Number, required: false },
-                    quantity: { type: Number, required: false },
-                    unitPrice: { type: Number, required: false },
-                    imageUrl: { type: String, required: false },
-                    reference: { type: String, required: false },
-                    totalAmount: { type: Number, required: false },
-                    productUrl: { type: String, required: false },
-                    merchantData: { type: String, required: false },
-                    quantityUnit: { type: String, required: false },
-                    totalTaxAmount: { type: Number, required: false },
-                    totalDiscountAmount: { type: Number, required: false },
-                    subscription: {
-                        name: { type: String, required: false },
-                        interval: { type: String, required: false },
-                        intervalCount: { type: Number, required: false },
-                    },
-                    productIdentifiers: {
-                        size: { type: String, required: false },
-                        brand: { type: String, required: false },
-                        color: { type: String, required: false },
-                        categoryPath: { type: String, required: false },
-                        globalTradeItemNumber: { type: String, required: false },
-                        manufacturerPartNumber: { type: String, required: false },
-                    },
-                },
-                {
-                    name: { type: String, required: false },
-                    quantity: { type: Number, required: false },
-                    unit_price: { type: Number, required: false },
-                    tax_rate: { type: Number, required: false },
-                    total_amount: { type: Number, required: false },
-                    total_discount_amount: { type: Number, required: false },
-                    total_tax_amount: { type: Number, required: false },
-                    product_url: { type: String, required: false },
-                    image_url: { type: String, required: false },
-                }
-            ],
         },
         status: {
             type: String,
