@@ -36,11 +36,6 @@ const createPaymentOrder = async (req, res) => {
             disableCash: data.disableCash,
             disableWallet: data.disableWallet,
             sourceCode: data.sourceCode,
-            tags: data.tags,
-            paymentMethodFees: data.paymentMethodFees,
-            cardTokens: data.cardTokens,
-            isCardVerification: data.isCardVerification,
-            nbgLoanOrderOptions: data.nbgLoanOrderOptions,
             klarnaOrderOptions: data.klarnaOrderOptions,
         };
 
