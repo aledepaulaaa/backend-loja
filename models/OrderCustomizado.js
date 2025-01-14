@@ -12,9 +12,9 @@ const orderSchema = new mongoose.Schema(
             required: false,
         },
         customer: {
-            email: { type: String, required: false },
-            fullName: { type: String, required: false },
-            phone: { type: String, required: false },
+            email: { type: String, required: true },
+            fullName: { type: String, required: true },
+            phone: { type: String, required: true },
             requestLang: { type: String, required: false },
         },
         dynamicDescriptor: {
