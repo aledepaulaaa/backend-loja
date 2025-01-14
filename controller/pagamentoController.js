@@ -34,7 +34,6 @@ const createPaymentOrder = async (req, res) => {
             disableCash: data.disableCash,
             disableWallet: data.disableWallet,
             sourceCode: data.sourceCode,
-            klarnaOrderOptions: data.klarnaOrderOptions,
         };
 
         // Salvar dados no banco de dados

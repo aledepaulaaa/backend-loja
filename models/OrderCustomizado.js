@@ -65,25 +65,6 @@ const orderSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        klarnaOrderOptions: {
-            attachment: {
-                body: { type: String, required: false },
-                contentType: { type: String, required: false },
-            },
-            billingAddress: {
-                city: { type: String, required: false },
-                email: { type: String, required: false },
-                phone: { type: String, required: false },
-                title: { type: String, required: false },
-                region: { type: String, required: false },
-                country: { type: String, required: false },
-                givenName: { type: String, required: false },
-                familyName: { type: String, required: false },
-                postalCode: { type: String, required: false },
-                streetAddress: { type: String, required: false },
-                streetAddress2: { type: String, required: false },
-            },
-        },
         status: {
             type: String,
             enum: ["Pendente", "Pago", "Cancelado"],
