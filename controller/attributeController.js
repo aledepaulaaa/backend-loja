@@ -6,11 +6,11 @@ const addAttribute = async (req, res) => {
     const newAttribute = new Attribute(req.body);
     await newAttribute.save();
     res.send({
-      message: "Attribute Added Successfully!",
+      message: "Atributo adicionado com sucesso!",
     });
   } catch (err) {
     res.status(500).send({
-      message: `Error occur when adding attribute ${err.message}`,
+      message: `Ocorreu um erro ${err.message}`,
     });
   }
 };
@@ -24,11 +24,12 @@ const addChildAttributes = async (req, res) => {
       { $push: { variants: req.body } }
     );
     res.send({
-      message: "Attribute Value Added Successfully!",
+      message: "Valor do atributo adicionado com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao adicionar o valor do atributo: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao adicionar o valor do atributo: " + err.message,
     });
   }
 };
@@ -38,11 +39,12 @@ const addAllAttributes = async (req, res) => {
     await Attribute.deleteMany();
     await Attribute.insertMany(req.body);
     res.send({
-      message: "Added all attributes successfully!",
+      message: "Atributos adicionados com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao adicionar todos os atributos: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao adicionar todos os atributos: " + err.message,
     });
   }
 };
@@ -55,8 +57,9 @@ const getAllAttributes = async (req, res) => {
     });
     res.send(attributes);
   } catch (err) {
+    console.log("Erro ao obter todos os atributos: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao obter todos os atributos: " + err.message,
     });
   }
 };
@@ -126,11 +129,12 @@ const updateManyAttribute = async (req, res) => {
     );
 
     res.send({
-      message: "Attributes update successfully!",
+      message: "Atributos atualizados com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao atualizar os atributos: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao atualizar os atributos: " + err.message,
     });
   }
 };
@@ -184,11 +188,12 @@ const updateAttributes = async (req, res) => {
     }
     await attribute.save();
     res.send({
-      message: "Attribute updated successfully!",
+      message: "Atributo atualizado com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao atualizar o atributo: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao atualizar o atributo: " + err.message,
     });
   }
 };
@@ -223,11 +228,12 @@ const updateChildAttributes = async (req, res) => {
     }
 
     res.send({
-      message: "Attribute Value Updated Successfully!",
+      message: "Atributo atualizado com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao atualizar o valor do atributo: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao atualizar o valor do atributo: " + err.message,
     });
   }
 };
@@ -291,11 +297,12 @@ const updateManyChildAttribute = async (req, res) => {
     }
 
     res.send({
-      message: "Attribute Values update successfully!",
+      message: "Atributo atualizado com sucesso!",
     });
   } catch (err) {
+    console.log("Erro ao atualizar os atributos: " + err.message);
     res.status(500).send({
-      message: err.message,
+      message: "Erro ao atualizar os atributos: " + err.message,
     });
   }
 };
@@ -312,9 +319,9 @@ const updateStatus = async (req, res) => {
       }
     );
     res.status(200).send({
-      message: `Attribute ${
-        newStatus === "show" ? "Published" : "Un-Published"
-      } Successfully!`,
+      message: `Atributo ${
+        newStatus === "show" ? "Publicado" : "Despublicado"
+      } Sucesso!`,
     });
   } catch (err) {
     res.status(500).send({
@@ -336,9 +343,9 @@ const updateChildStatus = async (req, res) => {
       }
     );
     res.status(200).send({
-      message: `Attribute Value ${
-        newStatus === "show" ? "Published" : "Un-Published"
-      } Successfully!`,
+      message: `Valor do atributo ${
+        newStatus === "show" ? "Publicado" : "Despublicado"
+      } Sucesso!`,
     });
   } catch (err) {
     res.status(500).send({
@@ -371,7 +378,7 @@ const deleteChildAttribute = async (req, res) => {
 
     await handleProductAttribute(attributeId, childId);
     res.send({
-      message: "Attribute Value Deleted Successfully!",
+      message: "Atributo deletado com sucesso!",
     });
   } catch (err) {
     res.status(500).send({
@@ -385,7 +392,7 @@ const deleteManyAttribute = async (req, res) => {
     await Attribute.deleteMany({ _id: req.body.ids });
     // console.log('delete many attribute');
     res.send({
-      message: `Attributes Delete Successfully!`,
+      message: `Atributo deletado com sucesso!`,
     });
   } catch (err) {
     res.status(500).send({
@@ -408,7 +415,7 @@ const deleteManyChildAttribute = async (req, res) => {
 
     await handleProductAttribute(req.body.id, req.body.ids, "multi");
     res.send({
-      message: `Attribute Values Delete Successfully!`,
+      message: `Atributo deletado com sucesso!`,
     });
   } catch (err) {
     res.status(500).send({

@@ -152,7 +152,7 @@ const getProductById = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   // console.log('update product')
-  // console.log('variant',req.body.variants)
+  console.log('variant',req.body.variants)
   try {
     const product = await Product.findById(req.params.id);
     // console.log("product", product);
@@ -179,15 +179,15 @@ const updateProduct = async (req, res) => {
       product.tag = req.body.tag;
 
       await product.save();
-      res.send({ data: product, message: "Product updated successfully!" });
+      res.send({ data: product, message: "Produto atualizado com sucesso" });
     } else {
       res.status(404).send({
-        message: "Product Not Found!",
+        message: "Produto não encontrado",
       });
     }
   } catch (err) {
+    console.log('err',err)
     res.status(404).send(err.message);
-    // console.log('err',err)
   }
 };
 

@@ -1,6 +1,14 @@
 const Webhook = require("../models/Webhook");
 const OrderCustomizado = require("../models/OrderCustomizado");
+const axios = require("axios");
 const verificationToken = process.env.VERIFICATION_TOKEN;
+
+//ZoneSoft config
+const zoneSoftApiUrl = "https://api.zonesoft.org/v2.1";
+const zoneSoftNif = process.env.ZONESOFT_NIF;
+const zoneSoftNome = process.env.ZONESOFT_NOME;
+const zoneSoftPassword = process.env.ZONESOFT_PASSWORD;
+const zoneSoftLoja = process.env.ZONESOFT_LOJA;
 
 const webhookConnection = async (req, res) => {
     console.log("Recebendo verificação do webhook...", req.params);
@@ -19,17 +27,66 @@ const webhookEvents = async (req, res) => {
                 await newWebhook.save();
                 console.log("Evento de pagamento salvo com sucesso: ", newWebhook);
 
-                const customerEmail = data.EventData?.Email; // Extrair o email do cliente
+                const customerEmail = data.EventData?.Email;
                 if (customerEmail) {
                     // Encontre a ordem usando o email do cliente e atualize o status
-                    const updatedOrder = await OrderCustomizado.findOneAndUpdate(
-                        { "email": customerEmail },
-                        { status: "Pago" },
-                        { new: true } // Retorna o documento atualizado
-                    );
+                    const updatedOrder = await OrderCustomizado.findOne({ email: customerEmail });
 
                     if (updatedOrder) {
+                        console.log(`Ordem encontrada com sucesso, atualizando status para Pago ${updatedOrder._id}`);
+                        updatedOrder.status = 'Pago';
+                        await updatedOrder.save();
                         console.log(`Status da ordem ${updatedOrder._id} atualizado para Pago`);
+
+                        // try {
+                        //     // 1. Autenticação na ZoneSoft
+                        //     const authResponse = await axios.post(
+                        //         `${zoneSoftApiUrl}/auth/authenticate`,
+                        //         {
+                        //             "user": {
+                        //                 "nif": zoneSoftNif,
+                        //                 "nome": zoneSoftNome,
+                        //                 "password": zoneSoftPassword,
+                        //                 "loja": zoneSoftLoja
+                        //             }
+                        //         }
+                        //     );
+                        //     const authHash = authResponse.data?.auth_hash;
+                        //     if (!authHash) {
+                        //         throw new Error("Falha ao autenticar na ZoneSoft");
+                        //     }
+
+                        //     // 2. Construção do objeto de venda usando dados da collection "orders"
+                        //     const saleItems = updatedOrder.merchantTrns.split(",").map((item) => {
+                        //         const [productName, quantityPart] = item.trim().split(" - Quantidade: ");
+                        //         const quantity = parseInt(quantityPart, 10) || 1;
+                        //         return {
+                        //             produto_codigo: "PROD123", // Código do produto fixo (pode precisar adaptar isso)
+                        //             descricao: productName.trim(),
+                        //             quantidade: quantity,
+                        //             valor_unitario: parseFloat((updatedOrder.amount / 100).toFixed(2)),
+                        //         };
+                        //     });
+
+                        //     const saleData = {
+                        //         auth_hash: authHash,
+                        //         sale: {
+                        //             cliente: updatedOrder._id, //Usando _id do pedido como id do cliente
+                        //             valor_total: parseFloat((updatedOrder.amount / 100).toFixed(2)),
+                        //             data_hora: new Date(updatedOrder.createdAt).toISOString(),
+                        //             itens: saleItems,
+                        //             referencia: updatedOrder.invoice, // Usando o invoice do pedido
+                        //             origem: "e-commerce",
+                        //         },
+                        //     };
+                        //     // 3. Envio da venda para ZoneSoft
+                        //     const zoneSoftResponse = await axios.post(`${zoneSoftApiUrl}/sales`, saleData);
+                        //     console.log("Venda enviada com sucesso para a ZoneSoft: ", zoneSoftResponse.data);
+                        // } catch (zoneSoftError) {
+                        //     console.error("Erro ao enviar venda para ZoneSoft:", zoneSoftError);
+                        //     res.status(500).json({ message: "Erro ao enviar venda para ZoneSoft" });
+                        //     return;
+                        // }
                     } else {
                         console.log(`Nenhuma ordem encontrada com o email: ${customerEmail}`);
                     }
@@ -50,7 +107,6 @@ const webhookEvents = async (req, res) => {
         }
 
         res.status(200).json({ message: "Webhook recebido com sucesso." });
-
     } catch (error) {
         console.error("Erro ao processar webhook: ", error);
         res.status(500).json({ message: "Erro ao processar webhook" });
