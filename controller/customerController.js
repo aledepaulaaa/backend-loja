@@ -301,6 +301,17 @@ const getCustomerById = async (req, res) => {
   }
 };
 
+const getCustomerByEmail = async (req, res) => {
+  try {
+    const customer = await Customer.findOne({ email: req.params.email });
+    res.send(customer);
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+}
+
 // Shipping address create or update
 const addShippingAddress = async (req, res) => {
   try {
@@ -410,6 +421,30 @@ const deleteShippingAddress = async (req, res) => {
   }
 };
 
+// Atualizar orderCode do customer
+const updateOrderCodeCustomer = async (req, res) => {
+  try {
+    const { email, orderCode } = req.body;
+    
+    // Encontrar o customer pelo email
+    const customer = await Customer.findOne({ email });
+    
+    if (customer) {
+      customer.orderCode = orderCode;
+      await customer.save();
+      res.send(customer);
+    } else {
+      res.status(404).send({
+        message: "Customer não encontrado.",
+      });
+    }
+  } catch (err) {
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+}
+
 const updateCustomer = async (req, res) => {
   try {
     // Validate the input
@@ -491,7 +526,9 @@ module.exports = {
   resetPassword,
   getAllCustomers,
   getCustomerById,
+  getCustomerByEmail,
   updateCustomer,
+  updateOrderCodeCustomer,
   deleteCustomer,
   addShippingAddress,
   getShippingAddress,

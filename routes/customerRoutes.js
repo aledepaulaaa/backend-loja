@@ -10,8 +10,10 @@ const {
   changePassword,
   resetPassword,
   getAllCustomers,
+  getCustomerByEmail,
   getCustomerById,
   updateCustomer,
+  updateOrderCodeCustomer,
   deleteCustomer,
   addAllCustomers,
   addShippingAddress,
@@ -68,6 +70,12 @@ router.get("/", getAllCustomers);
 
 //get a user
 router.get("/:id", getCustomerById);
+
+// get a user by email
+router.get("/email/:email", getCustomerByEmail);
+
+// update orderCode customer
+router.put("/update-customer", updateOrderCodeCustomer);
 
 //update a user
 router.put("/:id", updateCustomer);

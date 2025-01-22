@@ -22,7 +22,10 @@ const customerSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-
+    orderCode: {
+      type: Number,
+      required: false,
+    },
     shippingAddress: {
       type: Object,
       required: false,
