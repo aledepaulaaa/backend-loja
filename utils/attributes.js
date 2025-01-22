@@ -22,7 +22,7 @@ const attributes = [
         "status": "show"
       }
     ],
-    "option": "Dropdown"
+    "option": "Checkbox"
   },
   {
     "_id": "63f078f54b86ed26b05281b6",
