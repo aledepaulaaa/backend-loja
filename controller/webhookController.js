@@ -27,10 +27,10 @@ const webhookEvents = async (req, res) => {
                 await newWebhook.save();
                 console.log("Evento de pagamento salvo com sucesso: ", newWebhook);
 
-                const customerEmail = data.EventData?.Email;
-                if (customerEmail) {
+                const customerOrderCode = data.EventData?.OrderCode;
+                if (customerOrderCode) {
                     // Encontre a ordem usando o email do cliente e atualize o status
-                    const updatedOrder = await OrderCustomizado.findOne({ email: customerEmail });
+                    const updatedOrder = await OrderCustomizado.findOne({ orderCode: customerOrderCode });
 
                     if (updatedOrder) {
                         console.log(`Ordem encontrada com sucesso, atualizando status para Pago ${updatedOrder._id}`);
