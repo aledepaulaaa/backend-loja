@@ -1,17 +1,17 @@
 require("dotenv").config();
 const { connectDB } = require("../config/db");
 
-const Admin = require("../models/Admin");
-const adminData = require("../utils/admin");
+// const Admin = require("../models/Admin");
+// const adminData = require("../utils/admin");
 
-const Customer = require("../models/Customer");
-const customerData = require("../utils/customers");
+// const Customer = require("../models/Customer");
+// const customerData = require("../utils/customers");
 
-const Coupon = require("../models/Coupon");
-const couponData = require("../utils/coupon");
+// const Coupon = require("../models/Coupon");
+// const couponData = require("../utils/coupon");
 
-const Product = require("../models/Product");
-const productData = require("../utils/products");
+// const Product = require("../models/Product");
+// const productData = require("../utils/products");
 
 const Order = require("../models/Order");
 const orderData = require("../utils/orders");
@@ -43,23 +43,23 @@ const importData = async () => {
     await Attribute.deleteMany();
     await Attribute.insertMany(attributeData);
 
-    await Customer.deleteMany();
-    await Customer.insertMany(customerData);
+    // await Customer.deleteMany();
+    // await Customer.insertMany(customerData);
 
-    await Admin.deleteMany();
-    await Admin.insertMany(adminData);
+    // await Admin.deleteMany();
+    // await Admin.insertMany(adminData);
 
     await Category.deleteMany();
     await Category.insertMany(categoryData);
 
-    await Product.deleteMany();
-    await Product.insertMany(productData);
+    // await Product.deleteMany();
+    // await Product.insertMany(productData);
 
-    await Coupon.deleteMany();
-    await Coupon.insertMany(couponData);
+    // await Coupon.deleteMany();
+    // await Coupon.insertMany(couponData);
 
-    await Order.deleteMany();
-    await Order.insertMany(orderData);
+    // await Order.deleteMany();
+    // await Order.insertMany(orderData);
 
     await Setting.deleteMany();
     await Setting.insertMany(settingData);

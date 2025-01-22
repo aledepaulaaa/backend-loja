@@ -2,35 +2,34 @@
   {
     "_id": "63f078f54b86ed26b05281b2",
     "type": "attribute",
-    "extraType": "multiple",
     "status": "show",
     "title": {
-      "en": "Color"
+      "pt": "Sabor"
     },
     "name": {
-      "en": "Color"
+      "pt": "Sabor"
     },
     "variants": [
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b3",
         "name": {
-          "en": "Red"
-        }
+          "pt": "Margherita"
+        },
+        "status": "show"
       },
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b4",
         "name": {
-          "en": "Green"
-        }
+          "pt": "Quatro Queijos"
+        },
+        "status": "show"
       },
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b5",
         "name": {
-          "en": "Blue"
-        }
+          "pt": "Calabresa"
+        },
+        "status": "show"
       }
     ],
     "option": "Dropdown"
@@ -38,35 +37,37 @@
   {
     "_id": "63f078f54b86ed26b05281b6",
     "type": "attribute",
-    "extraType": "multiple",
     "status": "show",
     "title": {
-      "en": "Size"
+      "pt": "Tamanho"
     },
     "name": {
-      "en": "Size"
+      "pt": "Tamanho"
     },
     "variants": [
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b7",
         "name": {
-          "en": "Small"
-        }
+          "pt": "Pequena"
+        },
+        "preco": 19.99,
+        "status": "show"
       },
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b8",
         "name": {
-          "en": "Medium"
-        }
+          "pt": "Média"
+        },
+        "preco": 24.99,
+        "status": "show"
       },
       {
-        "status": "show",
         "_id": "63f078f54b86ed26b05281b9",
         "name": {
-          "en": "Large"
-        }
+          "pt": "Grande"
+        },
+        "preco": 29.99,
+        "status": "show"
       }
     ],
     "option": "Radio"
@@ -74,64 +75,37 @@
   {
     "_id": "63f34946d3639309840ca336",
     "type": "extra",
-    "extraType": "multiple",
     "status": "show",
     "title": {
-      "en": "Gift Wrap"
+      "pt": "Extras"
     },
     "name": {
-      "en": "Gift Wrap"
+      "pt": "Extras"
     },
     "variants": [
       {
-        "status": "show",
         "_id": "63f34946d3639309840ca337",
         "name": {
-          "en": "Yes"
-        }
+          "pt": "Queijo extra"
+        },
+        "preco": 2.99,
+        "status": "show"
       },
       {
-        "status": "show",
         "_id": "63f34946d3639309840ca338",
         "name": {
-          "en": "No"
-        }
-      }
-    ],
-    "option": "Checkbox"
-  },
-  {
-    "_id": "63f34983d3639309840ca64a",
-    "type": "extra",
-    "extraType": "multiple",
-    "status": "show",
-    "title": {
-      "en": "Package"
-    },
-    "name": {
-      "en": "Package"
-    },
-    "variants": [
-      {
-        "status": "show",
-        "_id": "63f34983d3639309840ca64b",
-        "name": {
-          "en": "Plastic"
-        }
+          "pt": "Bacon"
+        },
+        "preco": 3.99,
+        "status": "show"
       },
       {
-        "status": "show",
-        "_id": "63f34983d3639309840ca64c",
+        "_id": "63f34946d3639309840ca339",
         "name": {
-          "en": "Jar"
-        }
-      },
-      {
-        "status": "show",
-        "_id": "63f34983d3639309840ca64d",
-        "name": {
-          "en": "Eco Friendly"
-        }
+          "pt": "Azeitonas"
+        },
+        "preco": 1.99,
+        "status": "show"
       }
     ],
     "option": "Checkbox"

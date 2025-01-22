@@ -10,7 +10,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
-      dbName: "banco_teste",
+      dbName: "japizza_database",
     })
     console.log("mongodb connection success!")
   } catch (err) {

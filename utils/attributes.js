@@ -1,141 +1,85 @@
 const attributes = [
   {
-    _id: "63f078f54b86ed26b05281b2",
-    type: "attribute",
-    extraType: "multiple",
-    status: "show",
-    title: {
-      en: "Color",
-    },
-    name: {
-      en: "Color",
-    },
-    variants: [
+    "_id": "63f078f54b86ed26b05281b2",
+    "type": "attribute",
+    "status": "show",
+    "title": { "pt": "Sabor" },
+    "name": { "pt": "Sabor" },
+    "variants": [
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b3",
-        name: {
-          en: "Red",
-        },
+        "_id": "63f078f54b86ed26b05281b3",
+        "name": { "pt": "Margherita" },
+        "status": "show"
       },
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b4",
-        name: {
-          en: "Green",
-        },
+        "_id": "63f078f54b86ed26b05281b4",
+        "name": { "pt": "Quatro Queijos" },
+        "status": "show"
       },
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b5",
-        name: {
-          en: "Blue",
-        },
-      },
+        "_id": "63f078f54b86ed26b05281b5",
+        "name": { "pt": "Calabresa" },
+        "status": "show"
+      }
     ],
-    option: "Dropdown",
+    "option": "Dropdown"
   },
   {
-    _id: "63f078f54b86ed26b05281b6",
-    type: "attribute",
-    extraType: "multiple",
-    status: "show",
-    title: {
-      en: "Size",
-    },
-    name: {
-      en: "Size",
-    },
-    variants: [
+    "_id": "63f078f54b86ed26b05281b6",
+    "type": "attribute",
+    "status": "show",
+    "title": { "pt": "Tamanho" },
+    "name": { "pt": "Tamanho" },
+    "variants": [
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b7",
-        name: {
-          en: "Small",
-        },
+        "_id": "63f078f54b86ed26b05281b7",
+        "name": { "pt": "Pequena" },
+        "preco": 19.99,
+        "status": "show"
       },
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b8",
-        name: {
-          en: "Medium",
-        },
+        "_id": "63f078f54b86ed26b05281b8",
+        "name": { "pt": "Média" },
+        "preco": 24.99,
+        "status": "show"
       },
       {
-        status: "show",
-        _id: "63f078f54b86ed26b05281b9",
-        name: {
-          en: "Large",
-        },
-      },
+        "_id": "63f078f54b86ed26b05281b9",
+        "name": { "pt": "Grande" },
+        "preco": 29.99,
+        "status": "show"
+      }
     ],
-    option: "Radio",
+    "option": "Radio"
   },
   {
-    _id: "63f34946d3639309840ca336",
-    type: "extra",
-    extraType: "multiple",
-    status: "show",
-    title: {
-      en: "Gift Wrap",
-    },
-    name: {
-      en: "Gift Wrap",
-    },
-    variants: [
+    "_id": "63f34946d3639309840ca336",
+    "type": "extra",
+    "status": "show",
+    "title": { "pt": "Extras" },
+    "name": { "pt": "Extras" },
+    "variants": [
       {
-        status: "show",
-        _id: "63f34946d3639309840ca337",
-        name: {
-          en: "Yes",
-        },
+        "_id": "63f34946d3639309840ca337",
+        "name": { "pt": "Queijo extra" },
+        "preco": 2.99,
+        "status": "show"
       },
       {
-        status: "show",
-        _id: "63f34946d3639309840ca338",
-        name: {
-          en: "No",
-        },
+        "_id": "63f34946d3639309840ca338",
+        "name": { "pt": "Bacon" },
+        "preco": 3.99,
+        "status": "show"
       },
+      {
+        "_id": "63f34946d3639309840ca339",
+        "name": { "pt": "Azeitonas" },
+        "preco": 1.99,
+        "status": "show"
+      }
     ],
-    option: "Checkbox",
-  },
-  {
-    _id: "63f34983d3639309840ca64a",
-    type: "extra",
-    extraType: "multiple",
-    status: "show",
-    title: {
-      en: "Package",
-    },
-    name: {
-      en: "Package",
-    },
-    variants: [
-      {
-        status: "show",
-        _id: "63f34983d3639309840ca64b",
-        name: {
-          en: "Plastic",
-        },
-      },
-      {
-        status: "show",
-        _id: "63f34983d3639309840ca64c",
-        name: {
-          en: "Jar",
-        },
-      },
-      {
-        status: "show",
-        _id: "63f34983d3639309840ca64d",
-        name: {
-          en: "Eco Friendly",
-        },
-      },
-    ],
-    option: "Checkbox",
-  },
+    "option": "Checkbox"
+  }
 ];
 
 module.exports = attributes;
