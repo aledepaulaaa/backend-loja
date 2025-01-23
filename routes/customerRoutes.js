@@ -72,7 +72,7 @@ router.get("/", getAllCustomers);
 router.get("/:id", getCustomerById);
 
 // get a user by email
-router.get("/email/:email", getCustomerByEmail);
+router.post("/email", getCustomerByEmail);
 
 // update orderCode customer
 router.put("/update-customer", updateOrderCodeCustomer);

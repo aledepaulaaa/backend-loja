@@ -303,7 +303,9 @@ const getCustomerById = async (req, res) => {
 
 const getCustomerByEmail = async (req, res) => {
   try {
-    const customer = await Customer.findOne({ email: req.params.email });
+    const { email } = req.body
+    console.log("Buscando customer...: ", email)
+    const customer = await Customer.findOne({ email: email });
     res.send(customer);
   } catch (err) {
     res.status(500).send({
@@ -432,7 +434,7 @@ const updateOrderCodeCustomer = async (req, res) => {
     if (customer) {
       customer.orderCode = orderCode;
       await customer.save();
-      res.send(customer);
+      res.status(200).send(orderCode);
     } else {
       res.status(404).send({
         message: "Customer não encontrado.",
