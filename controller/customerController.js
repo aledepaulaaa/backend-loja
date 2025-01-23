@@ -10,6 +10,7 @@ const {
 const {
   forgetPasswordEmailBody,
 } = require("../lib/email-sender/templates/forget-password");
+const OrderCustomizado = require("../models/OrderCustomizado");
 
 const verifyEmailAddress = async (req, res) => {
   const isAdded = await Customer.findOne({ email: req.body.email });
@@ -38,11 +39,9 @@ const verifyEmailAddress = async (req, res) => {
   }
 };
 
-
 const registerCustomer = async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    console.log("Recebendo dados: ", { name, email, password });
 
     // Verificar se o email já está registrado
     const isAdded = await Customer.findOne({ email });
@@ -91,7 +90,7 @@ const addAllCustomers = async (req, res) => {
 
 const loginCustomer = async (req, res) => {
   try {
-    console.log("Email", req.body.email, "Senha:", req.body.password);
+    console.log("Recebendo email para login...", req.body.email);
     const customer = await Customer.findOne({ email: req.body.email });
 
     if (
@@ -303,9 +302,14 @@ const getCustomerById = async (req, res) => {
 
 const getCustomerByEmail = async (req, res) => {
   try {
-    const { email } = req.body
+    const { email } = req.query
     console.log("Buscando customer...: ", email)
     const customer = await Customer.findOne({ email: email });
+
+    if (!customer) {
+      return res.status(404).send({ message: "Customer não encontrado." });
+    }
+
     res.send(customer);
   } catch (err) {
     res.status(500).send({
@@ -313,6 +317,40 @@ const getCustomerByEmail = async (req, res) => {
     });
   }
 }
+
+// Atualizar orderCode do customer
+const updateOrderCodeCustomer = async (req, res) => {
+  try {
+    const { email, orderCode } = req.body;
+
+    console.log({
+      "Email": email,
+      "orderCode": orderCode
+    })
+
+    if (!email || !orderCode) {
+      return res.status(400).send({ message: "Email e orderCode são obrigatórios." }); // Bad Request
+    }
+
+    // Encontrar o customer pelo email
+    const customer = await OrderCustomizado.findOne({ email });
+
+    if (customer) {
+      customer.orderCode = orderCode;
+      await customer.save();
+      res.sendStatus(200).send(orderCode);
+    } else {
+      res.status(404).send({
+        message: "Customer não encontrado.",
+      });
+    }
+  } catch (err) {
+    console.log("Erro ao atualizar orderCode do customer:", err);
+    res.status(500).send({
+      message: err.message,
+    });
+  }
+};
 
 // Shipping address create or update
 const addShippingAddress = async (req, res) => {
@@ -422,30 +460,6 @@ const deleteShippingAddress = async (req, res) => {
     });
   }
 };
-
-// Atualizar orderCode do customer
-const updateOrderCodeCustomer = async (req, res) => {
-  try {
-    const { email, orderCode } = req.body;
-    
-    // Encontrar o customer pelo email
-    const customer = await Customer.findOne({ email });
-    
-    if (customer) {
-      customer.orderCode = orderCode;
-      await customer.save();
-      res.status(200).send(orderCode);
-    } else {
-      res.status(404).send({
-        message: "Customer não encontrado.",
-      });
-    }
-  } catch (err) {
-    res.status(500).send({
-      message: err.message,
-    });
-  }
-}
 
 const updateCustomer = async (req, res) => {
   try {

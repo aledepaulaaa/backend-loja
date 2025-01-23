@@ -1,7 +1,7 @@
 const Webhook = require("../models/Webhook");
 const OrderCustomizado = require("../models/OrderCustomizado");
-const axios = require("axios");
 const verificationToken = process.env.VERIFICATION_TOKEN;
+const axios = require("axios");
 
 //ZoneSoft config
 const zoneSoftApiUrl = "https://api.zonesoft.org/v2.1";
@@ -28,8 +28,9 @@ const webhookEvents = async (req, res) => {
                 console.log("Evento de pagamento salvo com sucesso: ", newWebhook);
 
                 const customerOrderCode = data.EventData?.OrderCode;
+                console.log("OrderCode do cliente: ", customerOrderCode);
                 if (customerOrderCode) {
-                    // Encontre a ordem usando o email do cliente e atualize o status
+                    // Encontre o usuário pela orderCode para atualizar o status de pago em orders
                     const updatedOrder = await OrderCustomizado.findOne({ orderCode: customerOrderCode });
 
                     if (updatedOrder) {
@@ -88,7 +89,7 @@ const webhookEvents = async (req, res) => {
                         //     return;
                         // }
                     } else {
-                        console.log(`Nenhuma ordem encontrada com o email: ${customerEmail}`);
+                        console.log(`Nenhuma ordem encontrada com o OrderCode: ${customerOrderCode}`);
                     }
                 } else {
                     console.log("Email do cliente não encontrado no webhook data.");

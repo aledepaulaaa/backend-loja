@@ -71,11 +71,8 @@ router.get("/", getAllCustomers);
 //get a user
 router.get("/:id", getCustomerById);
 
-// get a user by email
-router.post("/email", getCustomerByEmail);
-
 // update orderCode customer
-router.put("/update-customer", updateOrderCodeCustomer);
+router.put("/order-code", updateOrderCodeCustomer);
 
 //update a user
 router.put("/:id", updateCustomer);

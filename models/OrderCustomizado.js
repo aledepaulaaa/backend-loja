@@ -71,6 +71,10 @@ const orderSchema = new mongoose.Schema(
             type: Boolean,
             required: false,
         },
+        orderCode:{
+            type: Number,
+            required: false,
+        },
         sourceCode: {
             type: String,
             required: false,
